@@ -356,9 +356,10 @@ function get_sso_user() {
 
 	if ( ! empty( $saml->getErrors() ) ) {
 		$errors = implode( ', ', $saml->getErrors() );
+		$reason = $saml->getLastErrorReason();
 
 		/* translators: %s = error message */
-		return new \WP_Error( 'invalid-saml', sprintf( esc_html__( 'Error: Could not parse the authentication response, please forward this error to your administrator: "%s"', 'wp-simple-saml' ), esc_html( $errors ) ) );
+		return new \WP_Error( 'invalid-saml', sprintf( esc_html__( 'Error: Could not parse the authentication response, please forward this error to your administrator: "%s" - "%s"', 'wp-simple-saml' ), esc_html( $errors ), esc_html( $reason ) ) );
 	}
 
 	if ( ! $saml->isAuthenticated() ) {
